@@ -11,7 +11,7 @@ This project demonstrates two main workflows for univariate time series analysis
 
 ### Notebook: Prophet-EMD Forecasting and Feature Extraction
 - **Data Loading**: Reads a CSV file containing a time series with columns `ds` (timestamps) and `y` (values).
-- **Data Splitting**: Divides the series into training and testing sets with a forecast horizon (`test_size = 12`).
+- **Data Splitting**: Divides the series into training and testing sets with a forecast horizon.
 - **Chaos Analysis**: Uses the `nolds` package to compute the **Lyapunov exponent**, identifying chaotic behavior.
 - **STL Decomposition**: Applies `STL` from `statsmodels` to extract seasonal and trend components.
 - **R Feature Extraction**: Integrates with R (via `rpy2`) to run `tsfeatures`, extracting additional statistical features.
@@ -19,7 +19,7 @@ This project demonstrates two main workflows for univariate time series analysis
   - Applies **EMD** to decompose the training series into IMFs.
   - Trains a separate **Prophet** model for each IMF.
   - Aggregates IMF forecasts to produce the final prediction.
-- **CEEMDAN Forecasting** *(optional)*:
+- **CEEMDAN Forecasting**:
   - Applies **CEEMDAN** to obtain more refined IMFs.
   - Forecasting logic mirrors the EMD section.
 - **Evaluation**: Calculates **MAPE** and **RMSE** to evaluate the forecast accuracy.
@@ -31,13 +31,7 @@ This project demonstrates two main workflows for univariate time series analysis
 Install required Python packages:
 
 ```bash
-pip install pandas numpy matplotlib scikit-learn prophet PyEMD nolds statsmodels rpy2
-```
-
-> **Note**: Prophet requires `pystan`. Install it first:
-```bash
-pip install pystan==2.19.1.1
-pip install prophet
+pip install numpy==2.2.6 pandas==2.3.1 matplotlib==3.10.5 scipy==1.15.3 scikit-learn==1.7.1 nolds==0.6.2 rpy2==3.6.2 emd-signal==1.6.4 prophet==1.1.7 statsmodels==0.14.5
 ```
 
 Install **R** and the following R packages:
