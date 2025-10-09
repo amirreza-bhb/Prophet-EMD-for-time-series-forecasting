@@ -10,19 +10,24 @@ This project demonstrates two main workflows for univariate time series analysis
 ## Project Structure
 
 ### Notebook: Prophet-EMD Forecasting and Feature Extraction
-- **Data Loading**: Reads a CSV file containing a time series with columns `ds` (timestamps) and `y` (values).
-- **Data Splitting**: Divides the series into training and testing sets with a forecast horizon.
+- **Data Loading**: Reads multiple CSV files containing time series with columns `ds` (timestamps) and `y` (values).
+- **Data Splitting**: Divides the series into training and testing sets with a forecast horizon, typically 12 or 15 months depending on dataset.
 - **Chaos Analysis**: Uses the `nolds` package to compute the **Lyapunov exponent**, identifying chaotic behavior.
 - **STL Decomposition**: Applies `STL` from `statsmodels` to extract seasonal and trend components.
 - **R Feature Extraction**: Integrates with R (via `rpy2`) to run `tsfeatures`, extracting additional statistical features.
 - **EMD Forecasting**:
-  - Applies **EMD** to decompose the training series into IMFs.
+  - Applies **EMD** to decompose the training series into Intrinsic Mode Functions (IMFs).
   - Trains a separate **Prophet** model for each IMF.
   - Aggregates IMF forecasts to produce the final prediction.
 - **CEEMDAN Forecasting**:
   - Applies **CEEMDAN** to obtain more refined IMFs.
   - Forecasting logic mirrors the EMD section.
-- **Evaluation**: Calculates **MAPE** and **RMSE** to evaluate the forecast accuracy.
+- **ICEEMDAN Forecasting**:
+  - Uses precomputed **ICEEMDAN** IMFs obtained from original source implementations.
+  - Loads these IMFs from CSV files to ensure consistency and comparability.
+  - Fits Prophet models on each IMF and aggregates forecasts.
+- **Evaluation**: Calculates **MAPE** and **RMSE** to evaluate the forecast accuracy of all three methods.
+- **Visualization**: Generates plots for STL decomposition and forecast comparisons.
 
 ---
 
@@ -44,28 +49,27 @@ install.packages(c("tsfeatures", "forecast", "dplyr", "tidyr"))
 
 ## How to Run
 
-1. Replace `#path/to/dataset` in the notebook with your CSV file path.
-2. Ensure the CSV includes two columns:
-   - `ds`: Date or timestamp
-   - `y`: Time series values
-3. Execute the notebook cells in sequence:
-   - First: Chaos and STL analysis
-   - Then: Feature extraction via R
-   - Finally: EMD/CEEMDAN + Prophet forecasting and evaluation
-4. Review output metrics and plots.
-
+1.Place your datasets as CSV files in the ./Datasets/ directory, each containing ds and y columns.
+2.Ensure precomputed ICEEMDAN IMFs are available as CSV files in ./iceemdan_imfs/ICEEMDAN/ folder, named {dataset_name}_iceemdan_imf.csv.
+3.Run the notebook cells in order:
+&emsp; -Chaos and STL analysis
+&emsp; -R-based feature extraction
+&emsp; -Prophet forecasting using EMD, CEEMDAN, and ICEEMDAN methods
+4.Review output metrics, forecasts, and plots saved in ./result/{dataset_name}_result/.
 ---
 
 ## Key Highlights
 
-- **Lyapunov Exponent** helps detect chaos in the time series.
-- **EMD & CEEMDAN** break the series into meaningful intrinsic components.
-- **Prophet** is run independently on each IMF to model trends and seasonality.
-- **Feature Extraction** leverages R's rich ecosystem (`tsfeatures`) and Python libraries.
-- **Evaluation** uses test data to compute MAPE and RMSE over a 12-step forecast horizon.
+- **Lyapunov Exponent** detects chaos within time series data.
+- **EMD, CEEMDAN, and ICEEMDAN** provide layered decompositions for improved forecasting.
+- **Prophet** models are applied individually to each IMF, capturing intrinsic modes effectively.
+- **ICEEMDAN IMFs** are sourced from original published methods to ensure reproducibility and benchmark alignment.
+- **R** Integration enriches feature extraction with established time series statistical summaries.
+- **Evaluation Metrics** include MAPE and RMSE over multi-step forecast horizons
 
 ---
 
 ## References
 
 - Abbasimehr, H., Behboodi, A., & Bahrini, A. (2023). A novel hybrid model to forecast seasonal and chaotic time series. Expert Systems with Applications, 239, Article 122461.
+
