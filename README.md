@@ -49,13 +49,13 @@ install.packages(c("tsfeatures", "forecast", "dplyr", "tidyr"))
 
 ## How to Run
 
-1.Place your datasets as CSV files in the ./Datasets/ directory, each containing ds and y columns.
-2.Ensure precomputed ICEEMDAN IMFs are available as CSV files in ./iceemdan_imfs/ICEEMDAN/ folder, named {dataset_name}_iceemdan_imf.csv.
-3.Run the notebook cells in order:
+1. Place your datasets as CSV files in the ./Datasets/ directory, each containing ds and y columns.
+2. Ensure precomputed ICEEMDAN IMFs are available as CSV files in ./iceemdan_imfs/ICEEMDAN/ folder, named {dataset_name}_iceemdan_imf.csv.
+3. Run the notebook cells in order:
     -Chaos and STL analysis
     -R-based feature extraction
     -Prophet forecasting using EMD, CEEMDAN, and ICEEMDAN methods
-4.Review output metrics, forecasts, and plots saved in ./result/{dataset_name}_result/.
+4. Review output metrics, forecasts, and plots saved in ./result/{dataset_name}_result/.
 ---
 
 ## Key Highlights
